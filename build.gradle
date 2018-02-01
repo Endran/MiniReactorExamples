@@ -1,0 +1,87 @@
+buildscript {
+    ext.kotlin_version = '1.2.10'
+    ext.springBootVersion = '1.5.9.RELEASE'
+
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.13.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+
+    apply plugin: "java"
+    apply plugin: "com.github.ben-manes.versions"
+    apply plugin: "idea"
+    apply plugin: 'kotlin'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'application'
+
+    sourceCompatibility = '1.8'
+    targetCompatibility = "1.8"
+
+    ext.projectName = 'eu.bittipper.engine'
+    ext.projectVersion = '0.0.1'
+
+    ext.assertjVersion = "3.6.2"
+    ext.commonsLang3Version = "3.5"
+    ext.commonsMath3Version = "3.6.1"
+    ext.firebaseAdminVersion = "4.1.6"
+    ext.hamcrestVersion = "1.3"
+    ext.jacksonVersion = "2.8.5"
+    ext.jsoupVersion = "1.11.2"
+    ext.jMockitVersion = "1.31"
+    ext.jUnitVersion = "4.12"
+    ext.logbackVersion = "1.2.3"
+    ext.lombokVersion = "1.16.16"
+    ext.rxJavaVersion = '2.1.3'
+    ext.rxKotlinVersion = '2.2.0'
+    ext.sl4jVersion = "1.7.25"
+    ext.retrofitVersion= '2.2.0'
+    ext.springVersion = '1.5.9.RELEASE'
+    ext.swaggerVersion = '2.4.0'
+
+    ext.dockerGroup = "registry.gitlab.com/bittipper/backend"
+    ext.dockerMaintainer = 'David Hardy <davidhardy85@gmail.events>'
+    ext.dockerBaseImage = 'frolvlad/alpine-oraclejdk8:slim'
+
+    group = ext.projectName.toLowerCase()
+    version = ext.projectVersion
+
+    mainClassName = 'eu.bittipper.engine.Main'
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        main.kotlin.srcDirs += 'src/main/kotlin'
+    }
+
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        testCompile "org.springframework.boot:spring-boot-starter-test:${springVersion}"
+        testCompile "org.assertj:assertj-core:${assertjVersion}"
+        testCompile "org.jmockit:jmockit:${jMockitVersion}"
+        testCompile "junit:junit:${jUnitVersion}"
+    }
+
+    idea {
+        module {
+            inheritOutputDirs = false
+            outputDir = file("${buildDir}/classes/main/")
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+}
