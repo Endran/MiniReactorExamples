@@ -9,19 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ExampleController(private val miniReactor: MiniReactor) {
+@RequestMapping("/kotlin")
+class KotlinController(private val miniReactor: MiniReactor) {
 
     var count = 0
 
     @RequestMapping(path = arrayOf("/hello"), method = arrayOf(RequestMethod.GET))
     fun hello(): Observable<SomeResponse> {
-        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hello!!! (${count++})"))
-                .take(1)
+        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hello Kotlin request!!! (${count++})"))
+                .take(2)
     }
 
     @RequestMapping(path = arrayOf("/hi"), method = arrayOf(RequestMethod.GET))
     fun hi(): Observable<SomeResponse> {
-        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hi :) (${count++})"))
-                .take(1)
+        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hi Kotlin request :) (${count++})"))
+                .take(2)
     }
 }

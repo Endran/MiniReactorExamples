@@ -12,7 +12,8 @@ class SomeReaction(private val miniReactor: MiniReactor) {
     @PostConstruct
     fun start() {
         miniReactor.reaction(SomeRequest::class.java) {
-            it.map { it.toString() }.map { SomeResponse(it) }
+            it.map { it.toString() }
+                    .map { SomeResponse("Kotlin says: $it") }
         }
     }
 }
