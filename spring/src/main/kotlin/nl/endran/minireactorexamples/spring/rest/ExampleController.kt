@@ -14,8 +14,14 @@ class ExampleController(private val miniReactor: MiniReactor) {
     var count = 0
 
     @RequestMapping(path = arrayOf("/hello"), method = arrayOf(RequestMethod.GET))
-    fun handleMessage(): Observable<SomeResponse> {
-        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hello ${count++} !!"))
+    fun hello(): Observable<SomeResponse> {
+        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hello!!! (${count++})"))
+                .take(1)
+    }
+
+    @RequestMapping(path = arrayOf("/hi"), method = arrayOf(RequestMethod.GET))
+    fun hi(): Observable<SomeResponse> {
+        return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hi :) (${count++})"))
                 .take(1)
     }
 }

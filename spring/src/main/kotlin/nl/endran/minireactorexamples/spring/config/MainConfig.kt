@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import io.reactivex.internal.schedulers.SingleScheduler
-import io.reactivex.plugins.RxJavaPlugins
+import nl.endran.minireactor.ConcreteMiniReactor
 import nl.endran.minireactor.MiniReactor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan(basePackages = arrayOf("nl.endran.minireactorexamples.spring"))
-open class EngineConfig {
+open class MainConfig {
 
     @Bean
     open fun objectMapper(): ObjectMapper {
@@ -35,8 +34,6 @@ open class EngineConfig {
 
     @Bean
     open fun miniReactor(): MiniReactor {
-        val reactorScheduler = RxJavaPlugins.onSingleScheduler( RxJavaPlugins.initSingleScheduler({ SingleScheduler() }));
-        return MiniReactor(reactorScheduler)
-//        return MiniReactor(Schedulers.computation())
+        return ConcreteMiniReactor()
     }
 }
