@@ -1,10 +1,9 @@
 package nl.endran.minireactorexamples.spring.rest;
 
 import io.reactivex.Observable;
-import nl.endran.minireactor.ConcreteMiniReactor;
 import nl.endran.minireactor.MiniReactor;
-import nl.endran.minireactorexamples.spring.SomeRequest;
-import nl.endran.minireactorexamples.spring.SomeResponse;
+import nl.endran.minireactorexamples.spring.SomeJavaRequest;
+import nl.endran.minireactorexamples.spring.SomeJavaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,15 +22,15 @@ public class JavaController {
     }
 
     @RequestMapping(path = "hello", method = RequestMethod.GET)
-    public Observable<SomeResponse> hello() {
-        return miniReactor.lurkAndDispatch(SomeResponse.class, new SomeRequest("Hello Java request!!! (" + (count++) + ")"), ConcreteMiniReactor.Companion.generateId())
-                .take(2);
+    public Observable<SomeJavaResponse> hello() {
+        return miniReactor.lurkAndDispatch(SomeJavaResponse.class, new SomeJavaRequest("Hello Java request!!! (" + (count++) + ")"))
+                .take(1).toObservable();
     }
 
 
     @RequestMapping(path = "hi", method = RequestMethod.GET)
-    public Observable<SomeResponse> hi() {
-        return miniReactor.lurkAndDispatch(SomeResponse.class, new SomeRequest("Hi Java request:) (" + (count++) + ")"), ConcreteMiniReactor.Companion.generateId())
-                .take(2);
+    public Observable<SomeJavaResponse> hi() {
+        return miniReactor.lurkAndDispatch(SomeJavaResponse.class, new SomeJavaRequest("Hi Java request:) (" + (count++) + ")"))
+                .take(1).toObservable();
     }
 }

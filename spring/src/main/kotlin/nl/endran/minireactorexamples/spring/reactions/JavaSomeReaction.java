@@ -1,8 +1,8 @@
 package nl.endran.minireactorexamples.spring.reactions;
 
 import nl.endran.minireactor.MiniReactor;
-import nl.endran.minireactorexamples.spring.SomeRequest;
-import nl.endran.minireactorexamples.spring.SomeResponse;
+import nl.endran.minireactorexamples.spring.SomeJavaRequest;
+import nl.endran.minireactorexamples.spring.SomeJavaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,8 @@ public class JavaSomeReaction {
 
     @PostConstruct
     public void start() {
-        miniReactor.reaction(SomeRequest.class, o -> o
-                .map(SomeRequest::toString)
-                .map(s -> new SomeResponse("Java says: " + s)));
+        miniReactor.reaction(SomeJavaRequest.class, o -> o
+                .map(SomeJavaRequest::toString)
+                .map(s -> new SomeJavaResponse("Java says: " + s)));
     }
 }

@@ -9,9 +9,21 @@ class LoggingReaction(private val miniReactor: MiniReactor) {
 
     @PostConstruct
     fun start() {
-        miniReactor.lurker(Object::class.java)
+        miniReactor.lurkerForSequences(Object::class.java)
                 .subscribe {
-                    System.out.println("Reactor: $it")
+                    System.out.println("Reactor: ${getId(it.first)} ${it.second}")
                 }
+    }
+
+    companion object {
+        val sixteenDots = "................"
+
+        private fun getId(id: String): String {
+            return if (id.length < 16) {
+                "$id$sixteenDots:".substring(0, 16)
+            } else {
+                "$id:"
+            }
+        }
     }
 }

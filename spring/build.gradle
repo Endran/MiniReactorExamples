@@ -28,6 +28,6 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
 
-    compile 'com.github.endran:MiniReactor:0.1.0'
+    compile 'com.github.endran:MiniReactor:0.3.0'
     compile 'io.jmnarloch:rxjava-spring-boot-starter:2.0.0'
 }

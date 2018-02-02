@@ -17,12 +17,25 @@ class KotlinController(private val miniReactor: MiniReactor) {
     @RequestMapping(path = arrayOf("/hello"), method = arrayOf(RequestMethod.GET))
     fun hello(): Observable<SomeResponse> {
         return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hello Kotlin request!!! (${count++})"))
-                .take(2)
+                .take(1).toObservable()
     }
 
     @RequestMapping(path = arrayOf("/hi"), method = arrayOf(RequestMethod.GET))
     fun hi(): Observable<SomeResponse> {
         return miniReactor.lurkAndDispatch(SomeResponse::class.java, SomeRequest("Hi Kotlin request :) (${count++})"))
-                .take(2)
+                .take(1).toObservable()
+    }
+
+    @RequestMapping(path = arrayOf("/overload"), method = arrayOf(RequestMethod.GET))
+    fun overload(): Observable<SomeResponse> {
+        val max = 10000L
+        val myCount = count++
+        return miniReactor.lurker(SomeResponse::class.java)
+                .doOnSubscribe {
+                    for (i in 0..max) {
+                        miniReactor.dispatch(SomeRequest("Overloading request ($myCount:$i)"), "OverloadingRequest")
+                    }
+                }
+                .take(max).toObservable()
     }
 }
